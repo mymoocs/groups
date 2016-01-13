@@ -15,6 +15,8 @@ instance (Show a, Ord a) => Show (Permutation a) where
           domain = sort xs
 
 
+--------------------------------------------------------------------------------
+
 newtype Pa a = Pa ([a],[a])   
 instance (Show a, Ord a) => Show (Pa a) where
     show (Pa (ds, xs)) = showRow ds ++ showRow xs
@@ -49,13 +51,19 @@ instance Group (Pa Integer) where
 q = Pa ([0,1,2,3,4],[2,3,4,0,1])
 p = Pa ([2,3,4,0,1],[4,0,1,3,2])    
 
-    
+
+-- | sort a permutation by domain    
 psort (Pa (d,p)) = Pa (d',p')
     where
       (d',p') = (unzip . sort) $ zipWith (,)  d p
 
-
-                
+-- | function which return cyclic representation of a permutation
+-- p = Pa ([0..9],[3,5,8,7,2,0,9,1,4,6])
+-- q = Pa ([0..9],[2,4,0,5,9,1,8,7,6,3])
+-- >>> toCycle p
+-- [[0,3,7,1,5],[2,8,4],[6,9]]
+-- >>> toCycle q
+-- [[0,2],[1,4,9,3,5],[6,8],[7]]
 toCycle (Pa (d,p)) = cycle (safeHead d) [] []   
     where
       z = zipWith (,) d p
@@ -75,6 +83,7 @@ cP1 = Pa ([0..9],[2,4,0,5,9,1,8,7,6,3])
 safeHead :: [a] -> Maybe a
 safeHead [] = Nothing
 safeHead (x:_) = Just x
-              
+
+-- | validation of permutation                 
 valid :: Pa a -> Bool
 valid (Pa (ds,ps)) = undefined 
