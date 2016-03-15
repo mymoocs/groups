@@ -16,7 +16,7 @@ instance (Show a, Ord a) => Show (Permutation a) where
 
 
 --------------------------------------------------------------------------------
-
+-- Фрид Э. Элементарное введение в абстрактную алгебру. 
 newtype Pa a = Pa ([a],[a])   
 instance (Show a, Ord a) => Show (Pa a) where
     show (Pa (ds, xs)) = showRow ds ++ showRow xs
